@@ -1,49 +1,59 @@
 package com.example.blog.activity
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.blog.R
-import com.example.blog.activity.data.UserRepository
+import com.example.blog.activity.data.DataRepository
 import com.example.blog.dataclass.Model
 import com.example.blog.dataclass.UserApi
 import kotlinx.android.synthetic.main.log_in_layout.*
+import kotlinx.android.synthetic.main.profile_layout.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var isLoggedIn : SharedPreferences
     private lateinit var usersList: List<Model.User>
     private lateinit var appUser : Model.User
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.log_in_layout)
+        isLoggedIn = this.getSharedPreferences("isLoggedIn" , MODE_PRIVATE)
+        if (isLoggedIn.getBoolean("isLoggedIn",false)){
+            val intent = Intent(this , Profile::class.java)
+            startActivity(intent)
+        }
 
-        getUsersFromApi()
+        setContentView(R.layout.log_in_layout)
 
         log_in_btn.setOnClickListener {
             if( !checkUsername() || !checkEmail() )
                 return@setOnClickListener
-            if( !validateUser())
+            loading(true)
+            if( !getUsersFromApi())
                 return@setOnClickListener
-
-            Toast.makeText(this, "خوش آمدید", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, Profile::class.java)
-            startActivity(intent)
+            loading(false)
         }
 
         exit_btn.setOnClickListener {
-
             finish()
         }
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        loading(false)
+        email_txt.text.clear()
+        username_txt.text.clear()
+    }
     override fun onDestroy() {
         email_txt.text.clear()
         username_txt.text.clear()
@@ -60,24 +70,54 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getUsersFromApi() {
-        val userRepository = UserRepository()
-        val call : Call<List<Model.User>> = userRepository.getRetrofit().create(UserApi::class.java).GetUsers()
+    private fun getUsersFromApi(): Boolean {
+
+        val username = username_txt.text.toString()
+        val email = email_txt.text.toString()
+
+        val userRepository = DataRepository()
+        val call : Call<List<Model.User>> = userRepository.getRetrofit()
+                    .create(UserApi::class.java).GetUsers(username)
 
         call.enqueue(object : Callback<List<Model.User>> {
             override fun onResponse(
                 call: Call<List<Model.User>>,
                 response: Response<List<Model.User>>
             ) {
-                loading(false)
                 Log.w(
                     "Server Ok",
-                    response.body()!![2].email + "   |||   " + response.body()!![2].username
+                    response.body()?.get(0)!!.email + "   |||   " + response.body()?.get(0)!!.username
                 )
                 println("this is response :  \n"
-                        +"Email :  "+ response.body()!![2].email + "  ||  Username" + response.body()!![2].username)
-                usersList = response.body()!!
-                printUsers(usersList)
+                        +"Email :  "+ response.body()!![0].email + "  ||  Username" + response.body()!![0].username)
+                //loading(false)
+
+
+                appUser = response.body()!![0]
+                if(username == appUser.username && email == appUser.email){
+
+                    Toast.makeText(this@MainActivity, "خوش آمدید", Toast.LENGTH_SHORT).show()
+
+                    val editor = isLoggedIn.edit()
+                    editor.putBoolean("isLoggedIn" , true)
+                    editor.putString("appUser" ,    appUser.id.toString()+"*"+  //0
+                            appUser.name+"*"+           //1
+                            appUser.username+"*"+       //2
+                            appUser.email+"*"+          //3
+                            appUser.address.city+"*"+   //4
+                            appUser.phone+"*"+          //5
+                            appUser.website+"*"+        //6
+                            appUser.company.name)       //7
+                    editor.apply()
+                    editor.commit()
+                    val intent = Intent(this@MainActivity , Profile::class.java)
+                    startActivity(intent)
+
+                }else{
+                    Toast.makeText(this@MainActivity, "کاربر یافت نشد", Toast.LENGTH_SHORT).show()
+                    loading(false)
+                    return
+                }
             }
 
             override fun onFailure(call: Call<List<Model.User>>, t: Throwable) {
@@ -86,14 +126,10 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+
+        return false
     }
 
-    private fun printUsers(usersList: List<Model.User>) {
-        for (it in usersList.indices){
-            println("user  " +it+"  Username : "+usersList[it].username+"    Email : "+usersList[it].email)
-
-        }
-    }
 
 
     private fun checkEmail() : Boolean {
@@ -136,36 +172,6 @@ class MainActivity : AppCompatActivity() {
                 true
             }
         }
-    }
-
-
-    private fun validateUser() : Boolean {
-        val username = username_txt.text.toString()
-        val email = email_txt.text.toString()
-
-        println("Person : $username  $email")
-        for ( it in usersList.indices){
-            if (username.toLowerCase() == usersList[it].username.toLowerCase()) {
-                return if(email.toLowerCase() == usersList[it].email.toLowerCase()) {
-                    appUser = usersList[it]
-                    true
-                } else {
-                    Toast.makeText(this, "ایمیل یافت نشد", Toast.LENGTH_SHORT).show()
-                    false
-                }
-            }
-            if (email.toLowerCase() == usersList[it].email.toLowerCase()){
-                return if (username.toLowerCase() == usersList[it].username.toLowerCase()) {
-                    appUser = usersList[it]
-                    true
-                } else {
-                    Toast.makeText(this, "نام کاربری یافت نشد", Toast.LENGTH_SHORT).show()
-                    false
-                }
-            }
-        }
-        Toast.makeText(this, "کاربر یافت نشد", Toast.LENGTH_SHORT).show()
-        return false
     }
 
 }

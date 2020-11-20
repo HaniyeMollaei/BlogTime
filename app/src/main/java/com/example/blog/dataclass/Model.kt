@@ -8,7 +8,8 @@ object Model{
                       val address :   Address,
                       val phone   :   String,
                       val website :   String,
-                      val company :   Company )
+                      val company :   Company
+    )
 
     data class Address(
         val street  :   String ,
@@ -18,13 +19,35 @@ object Model{
         val geo     :   Geo
     )
 
-    class Geo(val lat      :   String    ,
-              val lng      :   String    )
-
-    data class Company(
-        val name        :   String ,
-        val catchPhrase :   String ,
-        val bs          :   String
+    class Geo(
+        val lat      :   String    ,
+        val lng      :   String
     )
 
+    data class Company(
+        val name            :   String ,
+        val catchPhrase     :   String ,
+        val bs              :   String
+    )
+
+    data class Post(
+        val userId  : Int   ,
+        val id      : Int   ,
+        val title   : String,
+        val body    : String
+    )
+
+    data class Album(
+        val userId  : Int   ,
+        val id      : Int   ,
+        val title   : String
+    )
+
+    data class Photo(
+        val albumId : Int   ,
+        val id      : Int   ,
+        val title   : String,
+        val url     : String,
+        val thumbnailUrl:String
+    )
 }

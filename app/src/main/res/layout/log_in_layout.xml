@@ -9,7 +9,10 @@
     android:gravity="center"
     android:background="@drawable/temp_background">
 
-
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/logo"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,8 +23,6 @@
         android:orientation="vertical"
         android:gravity="center"
         android:background="@drawable/log_in_back"
-        android:outlineAmbientShadowColor="@color/black"
-        android:outlineSpotShadowColor="@color/black"
         android:inputType="text"
         android:selectAllOnFocus="true"
         >
@@ -74,13 +75,12 @@
                 android:textStyle="bold"
                 android:text="خروج"
                 android:layout_marginEnd="10dp"
-                android:outlineAmbientShadowColor="@color/black"
-                android:outlineSpotShadowColor="@color/black"
+
                 />
             />
 
             <ProgressBar
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_gravity="center"
                 android:id="@+id/login_pb"
                 android:layout_weight="0.5"
@@ -90,7 +90,7 @@
                 />
 
             <Button
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_gravity="center"
                 android:id="@+id/log_in_btn"
                 android:layout_weight="0.5"
