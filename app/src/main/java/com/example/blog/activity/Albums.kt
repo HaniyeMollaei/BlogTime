@@ -2,7 +2,10 @@ package com.example.blog.activity
 
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.blog.R
@@ -15,19 +18,22 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Albums:AppCompatActivity(){
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.album_layout)
+class Albums: Fragment(){
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.album_layout, container, false)
+    }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         recycler_view.layoutManager =
-            LinearLayoutManager(this@Albums, RecyclerView.VERTICAL, true)
+            LinearLayoutManager(activity, RecyclerView.VERTICAL, true)
 
-        getAlbumsFromApi()
+            getAlbumsFromApi()
 
-        back_btn3.setOnClickListener {
-            finish()
-        }
     }
 
     private fun getAlbumsFromApi() {
@@ -41,15 +47,11 @@ class Albums:AppCompatActivity(){
                 call: Call<List<Model.Album>>,
                 response: Response<List<Model.Album>>
             ) {
-                Log.w(
-                    "Server Ok",
-                    response.body()?.get(0)!!.title + "   |||   " + response.body()?.get(0)!!.userId
-                )
+
                 println("this is response :  \n"
                         +"Title :  "+ response.body()!![0].title + "  ||  UserId" + response.body()!![0].userId)
 
-
-                recycler_view.adapter = AlbumAdapter(response.body()!!, this@Albums)
+                recycler_view.adapter = AlbumAdapter(response.body()!!, context)
 
             }
 

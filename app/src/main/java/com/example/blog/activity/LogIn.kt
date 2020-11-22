@@ -12,23 +12,25 @@ import com.example.blog.activity.data.DataRepository
 import com.example.blog.dataclass.Model
 import com.example.blog.dataclass.UserApi
 import kotlinx.android.synthetic.main.log_in_layout.*
-import kotlinx.android.synthetic.main.profile_layout.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
+class LogIn : AppCompatActivity() {
 
     lateinit var isLoggedIn : SharedPreferences
-    private lateinit var usersList: List<Model.User>
+    lateinit var userData : SharedPreferences
+
     private lateinit var appUser : Model.User
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         isLoggedIn = this.getSharedPreferences("isLoggedIn" , MODE_PRIVATE)
+        userData = this.getSharedPreferences("appUser" , MODE_PRIVATE)
+
         if (isLoggedIn.getBoolean("isLoggedIn",false)){
-            val intent = Intent(this , Profile::class.java)
+            val intent = Intent(this , MainHandler::class.java)
             startActivity(intent)
         }
 
@@ -48,16 +50,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRestart() {
-        super.onRestart()
-        loading(false)
-        email_txt.text.clear()
-        username_txt.text.clear()
-    }
     override fun onDestroy() {
         email_txt.text.clear()
         username_txt.text.clear()
         super.onDestroy()
+    }
+
+    override fun onRestart() {
+        finish()
+        super.onRestart()
     }
 
     private fun loading(show: Boolean) {
@@ -84,23 +85,21 @@ class MainActivity : AppCompatActivity() {
                 call: Call<List<Model.User>>,
                 response: Response<List<Model.User>>
             ) {
-                Log.w(
-                    "Server Ok",
-                    response.body()?.get(0)!!.email + "   |||   " + response.body()?.get(0)!!.username
-                )
                 println("this is response :  \n"
                         +"Email :  "+ response.body()!![0].email + "  ||  Username" + response.body()!![0].username)
-                //loading(false)
-
 
                 appUser = response.body()!![0]
                 if(username == appUser.username && email == appUser.email){
 
-                    Toast.makeText(this@MainActivity, "خوش آمدید", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LogIn, "خوش آمدید", Toast.LENGTH_SHORT).show()
 
                     val editor = isLoggedIn.edit()
                     editor.putBoolean("isLoggedIn" , true)
-                    editor.putString("appUser" ,    appUser.id.toString()+"*"+  //0
+                    editor.apply()
+
+                    val editor2 = userData.edit()
+                    editor2.putString("appUser" ,
+                            appUser.id.toString()+"*"+  //0
                             appUser.name+"*"+           //1
                             appUser.username+"*"+       //2
                             appUser.email+"*"+          //3
@@ -108,13 +107,12 @@ class MainActivity : AppCompatActivity() {
                             appUser.phone+"*"+          //5
                             appUser.website+"*"+        //6
                             appUser.company.name)       //7
-                    editor.apply()
-                    editor.commit()
-                    val intent = Intent(this@MainActivity , Profile::class.java)
+                    editor2.apply()
+                    val intent = Intent(this@LogIn , MainHandler::class.java)
                     startActivity(intent)
 
                 }else{
-                    Toast.makeText(this@MainActivity, "کاربر یافت نشد", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LogIn, "کاربر یافت نشد", Toast.LENGTH_SHORT).show()
                     loading(false)
                     return
                 }

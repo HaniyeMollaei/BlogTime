@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".activity.AlbumContent"
     android:orientation="vertical"
-    android:background="@drawable/temp_background">
+    >
 
     <GridView
         android:id="@+id/album_gridView"
@@ -13,16 +13,5 @@
         android:layout_height="match_parent"
         android:numColumns="3"
         android:layout_weight="0.08"/>
-
-    <Button
-        android:id="@+id/back_btn4"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/log_in_back"
-        android:text="بازگشت"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_weight="0.92"/>
 
 </LinearLayout>

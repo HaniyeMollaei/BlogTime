@@ -2,9 +2,13 @@ package com.example.blog.activity
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.blog.R
 import com.example.blog.activity.data.DataRepository
 import com.example.blog.adapter.PostAdapter
@@ -15,19 +19,23 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Feed:AppCompatActivity() {
+class Feed:Fragment() {
 
     lateinit var postsList: List<Model.Post>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.feed_layout)
-        getPostsFromApi()
-
-        back_btn2.setOnClickListener {
-            finish()
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater?.inflate(R.layout.feed_layout, container, false)
     }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        getPostsFromApi()
+    }
+
 
     private fun loading(show: Boolean) {
         if(show){
@@ -51,7 +59,6 @@ class Feed:AppCompatActivity() {
             ) {
                 loading(false)
                 postsList = response.body()!!
-                printPosts(postsList)
                 val adapterTest = PostAdapter(postsList)
                 feed_list.adapter = adapterTest
             }
@@ -62,12 +69,5 @@ class Feed:AppCompatActivity() {
             }
 
         })
-    }
-
-    private fun printPosts(postsList: List<Model.Post>) {
-        for (it in postsList.indices){
-            println("user  " +it+"  Username : "+postsList[it].title+"    Email : "+postsList[it].body)
-
-        }
     }
 }

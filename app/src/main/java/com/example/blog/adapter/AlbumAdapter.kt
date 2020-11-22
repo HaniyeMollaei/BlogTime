@@ -21,7 +21,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AlbumAdapter(private val albumData: List<Model.Album>, private val context : Context )
+class AlbumAdapter(private val albumData: List<Model.Album>, private val context: Context?)
     : RecyclerView.Adapter<AlbumAdapter.CustomViewHolder>() {
 
     inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -41,9 +41,9 @@ class AlbumAdapter(private val albumData: List<Model.Album>, private val context
         getImageFromApi(1 , holder , position)
         holder.title.text = albumData[position].title
         holder.tempView.setOnClickListener {
-            var intent_temp = Intent(context , AlbumContent::class.java)
+            val intent_temp = Intent(context , AlbumContent::class.java)
                 .putExtra("albumId" , albumData[position].id)
-            context.startActivity(intent_temp)
+            context?.startActivity(intent_temp)
         }
     }
 

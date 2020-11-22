@@ -3,13 +3,6 @@
     <size
         android:height="30dp"/>
     <solid android:color="@color/colorPrimaryDark"/>
-    <gradient android:centerColor="#621170" android:angle="90"
-        android:type="sweep" android:centerY="1" android:centerX="1"
-        android:endColor="#3A0243"
-        android:startColor="@color/white"
-
-        />
-
     <corners
         android:radius="25dp"
         />

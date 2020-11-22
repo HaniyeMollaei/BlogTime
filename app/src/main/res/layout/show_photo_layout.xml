@@ -3,36 +3,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/temp_background">
+    >
     <ImageView
         android:id="@+id/photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/logo"
-        android:layout_weight="0.08"/>
+        android:layout_weight="0.08"
+        android:contentDescription="@string/image" />
 
     <TextView
         android:id="@+id/photo_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="12dp"
-        android:textColor="@color/white"
-        android:text="@string/title"
-        android:layout_weight="0.46"
+        android:textSize="12sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_weight="0.92"
         android:paddingEnd="10dp"
         android:paddingStart="10dp"
         android:layout_margin="5dp"
 
         />
-    <Button
-        android:id="@+id/back_btn5"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.46"
-        android:layout_marginBottom="4dp"
-        android:background="@drawable/log_in_back"
-        android:text="@string/back"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@color/colorPrimaryDark"/>
+
 </LinearLayout>

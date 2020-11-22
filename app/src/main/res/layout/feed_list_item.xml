@@ -1,41 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linear_temp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="10dp"
-    android:paddingTop="15dp"
     android:background="@drawable/silver_background"
-    android:layout_margin="20dp">
+    android:layout_marginEnd="10dp"
+    android:layout_margin="5dp">
 
-    <TextView
-        android:id="@+id/title_txt"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="5dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/temp_background"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        tools:text="title"
-        android:gravity="start"
-        android:layout_gravity="start"
-        />
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/title_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/title_background"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            tools:text="title"
+            android:gravity="start"
+            android:layout_gravity="start"
+            />
 
 
-    <TextView
-        android:id="@+id/body_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:gravity="start"
-        android:paddingStart="20dp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="12sp"
-        tools:text="bla bla bla blllllllaaaaaaa puuuuffffff" />
+        <TextView
+            android:id="@+id/body_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:gravity="start"
+            android:paddingStart="20dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            tools:text="bla bla bla blllllllaaaaaaa puuuuffffff" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:gravity="start"
+            android:paddingStart="20dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/colorPrimaryLight"
+            android:textSize="12sp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            tools:text="@string/comment" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

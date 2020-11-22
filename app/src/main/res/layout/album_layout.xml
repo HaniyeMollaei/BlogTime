@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/temp_background">
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -14,15 +14,4 @@
         android:layout_weight="0.08"
         />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.92"
-        android:id="@+id/back_btn3"
-        android:background="@drawable/log_in_back"
-        android:text="بازگشت"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@color/colorPrimaryDark"
-    />
 </LinearLayout>

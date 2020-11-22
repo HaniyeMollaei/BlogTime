@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     android:layout_margin="5dp"
     android:gravity="start"
-    android:background="@drawable/silver_background">
+    >
 
     <ImageView
         android:layout_width="80dp"
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title"
-        android:layout_margin="10dp"
+        android:layout_margin="12dp"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="15sp"
         />
