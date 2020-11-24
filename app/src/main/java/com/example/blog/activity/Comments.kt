@@ -35,6 +35,7 @@ class Comments:Fragment() {
         super.onActivityCreated(savedInstanceState)
         getCommentsFromApi(requireArguments().getInt("postId",0))
 
+
     }
 
 

@@ -17,12 +17,15 @@ class MainHandler:AppCompatActivity() {
         replaceFragment(Posts())
 
         post_btn.setOnClickListener {
+            frag.text = "Feed"
             replaceFragment(Posts())
         }
         profile_btn.setOnClickListener {
+            frag.text = "Profile"
             replaceFragment(Profile())
         }
         album_btn.setOnClickListener {
+            frag.text = "Album"
             replaceFragment(Albums())
         }
     }
