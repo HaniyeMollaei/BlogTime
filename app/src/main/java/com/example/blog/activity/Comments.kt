@@ -12,17 +12,17 @@ import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import com.example.blog.R
 import com.example.blog.activity.data.DataRepository
-import com.example.blog.adapter.PostAdapter
+import com.example.blog.adapter.CommentAdapter
+import com.example.blog.dataclass.CommentApi
 import com.example.blog.dataclass.Model
-import com.example.blog.dataclass.PostApi
 import kotlinx.android.synthetic.main.feed_layout.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Feed:Fragment() {
+class Comments:Fragment() {
 
-    lateinit var postsList: List<Model.Post>
+    lateinit var commentsList: List<Model.Comment>
     private lateinit var userData : SharedPreferences
 
     override fun onCreateView(
@@ -36,8 +36,8 @@ class Feed:Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         userData = activity?.getSharedPreferences("appUser" , Context.MODE_PRIVATE) ?: userData
-        val data_tmp = userData.getString("appUser" , "-1*هانیه ملائی*Haniye_Mli*Haniyemolaei1378@gmail.com*تهران*09371544159*https://github.com/HaniyeMollaei*شرکت ...")
-        getPostsFromApi( data_tmp!!.split("*")[0].toInt())
+        val data_tmp = userData.getString("appUser" , "")
+        getCommentsFromApi(2)
     }
 
 
@@ -52,22 +52,22 @@ class Feed:Fragment() {
         }
     }
 
-    private fun getPostsFromApi(userId: Int) {
+    private fun getCommentsFromApi(postId: Int) {
         val dataRepository = DataRepository()
-        val call : Call<List<Model.Post>> = dataRepository.getRetrofit().create(PostApi::class.java).GetPosts(userId)
+        val call : Call<List<Model.Comment>> = dataRepository.getRetrofit().create(CommentApi::class.java).GetComments(postId)
 
-        call.enqueue(object : Callback<List<Model.Post>> {
+        call.enqueue(object : Callback<List<Model.Comment>> {
             override fun onResponse(
-                call: Call<List<Model.Post>>,
-                response: Response<List<Model.Post>>
+                call: Call<List<Model.Comment>>,
+                response: Response<List<Model.Comment>>
             ) {
                 loading(false)
-                postsList = response.body()!!
-                val adapterTest = PostAdapter(postsList , activity)
+                commentsList = response.body()!!
+                val adapterTest = CommentAdapter(commentsList)
                 feed_list.adapter = adapterTest
             }
 
-            override fun onFailure(call: Call<List<Model.Post>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Model.Comment>>, t: Throwable) {
                 Log.w("Server Error", t.message.toString())
                 println("Failed connection")
             }

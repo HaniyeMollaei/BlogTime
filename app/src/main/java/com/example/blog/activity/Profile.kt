@@ -34,7 +34,7 @@ class Profile:Fragment() {
         userDataArr = data_tmp!!.split("*")
 
         edit_btn.setOnClickListener {
-            Toast.makeText( activity , "امکان ویرایش اطلاعات فعلا مهیا نیست ." , Toast.LENGTH_SHORT).show()
+            Toast.makeText( activity , "It isn't available" , Toast.LENGTH_SHORT).show()
         }
 
         name.text = userDataArr[1]

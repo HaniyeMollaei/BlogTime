@@ -20,11 +20,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="10dp"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/title_background"
-            android:textColor="@color/colorPrimaryDark"
+            android:background="@drawable/btn_background"
+            android:textColor="@color/colorPrimaryLight"
             android:textSize="14sp"
             tools:text="title"
             android:gravity="start"
@@ -43,20 +43,6 @@
             android:textSize="12sp"
             android:layout_marginTop="5dp"
             tools:text="bla bla bla blllllllaaaaaaa puuuuffffff" />
-
-        <Button
-            android:id="@+id/comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:gravity="start"
-            android:paddingStart="20dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/colorPrimaryLight"
-            android:textSize="12sp"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:text="@string/comment" />
 
     </LinearLayout>
 

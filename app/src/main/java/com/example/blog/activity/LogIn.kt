@@ -29,10 +29,10 @@ class LogIn : AppCompatActivity() {
         isLoggedIn = this.getSharedPreferences("isLoggedIn" , MODE_PRIVATE)
         userData = this.getSharedPreferences("appUser" , MODE_PRIVATE)
 
-        if (isLoggedIn.getBoolean("isLoggedIn",false)){
-            val intent = Intent(this , MainHandler::class.java)
-            startActivity(intent)
-        }
+//        if (isLoggedIn.getBoolean("isLoggedIn",false)){
+//            val intent = Intent(this , MainHandler::class.java)
+//            startActivity(intent)
+//        }
 
         setContentView(R.layout.log_in_layout)
 
@@ -43,6 +43,8 @@ class LogIn : AppCompatActivity() {
             if( !getUsersFromApi())
                 return@setOnClickListener
             loading(false)
+            val intent = Intent(this , MainHandler::class.java)
+            startActivity(intent)
         }
 
         exit_btn.setOnClickListener {
@@ -85,9 +87,6 @@ class LogIn : AppCompatActivity() {
                 call: Call<List<Model.User>>,
                 response: Response<List<Model.User>>
             ) {
-                println("this is response :  \n"
-                        +"Email :  "+ response.body()!![0].email + "  ||  Username" + response.body()!![0].username)
-
                 appUser = response.body()!![0]
                 if(username == appUser.username && email == appUser.email){
 

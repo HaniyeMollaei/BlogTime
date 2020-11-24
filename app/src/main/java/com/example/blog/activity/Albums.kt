@@ -1,5 +1,7 @@
 package com.example.blog.activity
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,6 +21,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class Albums: Fragment(){
+
+    private lateinit var userData : SharedPreferences
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,28 +36,24 @@ class Albums: Fragment(){
         super.onActivityCreated(savedInstanceState)
         recycler_view.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, true)
-
-            getAlbumsFromApi()
+        userData = activity?.getSharedPreferences("appUser" , Context.MODE_PRIVATE) ?: userData
+        val data_tmp = userData.getString("appUser" , "-1*هانیه ملائی*Haniye_Mli*Haniyemolaei1378@gmail.com*تهران*09371544159*https://github.com/HaniyeMollaei*شرکت ...")
+        getAlbumsFromApi(data_tmp!!.split("*")[0].toInt())
 
     }
 
-    private fun getAlbumsFromApi() {
+    private fun getAlbumsFromApi(userId: Int) {
 
         val dataRepository = DataRepository()
         val call : Call<List<Model.Album>> = dataRepository.getRetrofit()
-            .create(AlbumApi::class.java).GetAlbums(2)
+            .create(AlbumApi::class.java).GetAlbums(userId)
 
         call.enqueue(object : Callback<List<Model.Album>> {
             override fun onResponse(
                 call: Call<List<Model.Album>>,
                 response: Response<List<Model.Album>>
             ) {
-
-                println("this is response :  \n"
-                        +"Title :  "+ response.body()!![0].title + "  ||  UserId" + response.body()!![0].userId)
-
                 recycler_view.adapter = AlbumAdapter(response.body()!!, context)
-
             }
 
             override fun onFailure(call: Call<List<Model.Album>>, t: Throwable) {

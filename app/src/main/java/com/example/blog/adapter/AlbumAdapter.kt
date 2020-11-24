@@ -68,4 +68,6 @@ class AlbumAdapter(private val albumData: List<Model.Album>, private val context
             }
         })
     }
+
+
 }
