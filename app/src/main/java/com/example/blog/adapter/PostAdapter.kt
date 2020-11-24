@@ -1,5 +1,6 @@
 package com.example.blog.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +43,12 @@ class PostAdapter(private val data: List<Model.Post>, activity: FragmentActivity
             Toast.makeText(parent.context , "${data1.id}" , Toast.LENGTH_SHORT).show()
         }
         view.comment.setOnClickListener {
-            this@PostAdapter.act!!.supportFragmentManager.beginTransaction().replace(R.id.container , Comments()).commit()
+            val bundle = Bundle()
+            bundle.putInt("postId", data1.id)
+            val fragmentTwo = Comments()
+            fragmentTwo.arguments = bundle
+
+            this@PostAdapter.act!!.supportFragmentManager.beginTransaction().replace(R.id.container , fragmentTwo).commit()
         }
         return view
     }

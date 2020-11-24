@@ -31,12 +31,12 @@
 
         <EditText
             android:id="@+id/username_txt"
-            android:hint="@string/username"
-            android:textSize="14sp"
+            android:hint="@string/username_en"
+            android:textSize="12sp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:textColor="@color/colorPrimaryDark"
-            android:textColorHint="@color/colorPrimaryDark"
+            android:textColorHint="#044E8C"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -44,12 +44,12 @@
             />
         <EditText
             android:id="@+id/email_txt"
-            android:hint="@string/email"
-            android:textSize="14sp"
+            android:hint="@string/email_en"
+            android:textSize="12sp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:textColor="@color/colorPrimaryDark"
-            android:textColorHint="@color/colorPrimaryDark"
+            android:textColorHint="FF044E8C"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
@@ -72,9 +72,9 @@
                 android:layout_weight="0.5"
                 android:background="@drawable/btn_background"
                 android:textColor="@color/colorPrimaryLight"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:text="@string/exit"
+                android:text="@string/exit_en"
                 android:layout_marginEnd="10dp"
 
                 />
@@ -98,9 +98,9 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_background"
                 android:textColor="@color/colorPrimaryLight"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:text="@string/login"
+                android:text="Log In"
                 android:layout_marginStart="10dp"
                 />
 

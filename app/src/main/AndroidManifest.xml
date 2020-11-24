@@ -12,14 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activity.LogIn"/>
-        <activity android:name=".activity.MainHandler">
+        <activity android:name=".activity.LogIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.MainHandler"/>
         <activity android:name=".activity.AlbumContent"/>
         <activity android:name=".activity.ShowPhoto"/>
     </application>

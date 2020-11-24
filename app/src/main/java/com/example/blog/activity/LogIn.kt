@@ -24,17 +24,16 @@ class LogIn : AppCompatActivity() {
     private lateinit var appUser : Model.User
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.log_in_layout)
+
         isLoggedIn = this.getSharedPreferences("isLoggedIn" , MODE_PRIVATE)
         userData = this.getSharedPreferences("appUser" , MODE_PRIVATE)
 
-//        if (isLoggedIn.getBoolean("isLoggedIn",false)){
-//            val intent = Intent(this , MainHandler::class.java)
-//            startActivity(intent)
-//        }
-
-        setContentView(R.layout.log_in_layout)
+        if (isLoggedIn.getBoolean("isLoggedIn",false)){
+            val intent = Intent(this , MainHandler::class.java)
+            startActivity(intent)
+        }
 
         log_in_btn.setOnClickListener {
             if( !checkUsername() || !checkEmail() )
@@ -43,8 +42,8 @@ class LogIn : AppCompatActivity() {
             if( !getUsersFromApi())
                 return@setOnClickListener
             loading(false)
-            val intent = Intent(this , MainHandler::class.java)
-            startActivity(intent)
+
+            startActivity( Intent(this , MainHandler::class.java))
         }
 
         exit_btn.setOnClickListener {
@@ -87,28 +86,34 @@ class LogIn : AppCompatActivity() {
                 call: Call<List<Model.User>>,
                 response: Response<List<Model.User>>
             ) {
-                appUser = response.body()!![0]
-                if(username == appUser.username && email == appUser.email){
+                if (!response.body()!!.isEmpty()){
+                    appUser = response.body()!!.get(0)
+                    if(username == appUser.username && email == appUser.email){
 
-                    Toast.makeText(this@LogIn, "خوش آمدید", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@LogIn, "خوش آمدید", Toast.LENGTH_SHORT).show()
 
-                    val editor = isLoggedIn.edit()
-                    editor.putBoolean("isLoggedIn" , true)
-                    editor.apply()
+                        val editor = isLoggedIn.edit()
+                        editor.putBoolean("isLoggedIn" , true)
+                        editor.apply()
 
-                    val editor2 = userData.edit()
-                    editor2.putString("appUser" ,
+                        val editor2 = userData.edit()
+                        editor2.putString("appUser" ,
                             appUser.id.toString()+"*"+  //0
-                            appUser.name+"*"+           //1
-                            appUser.username+"*"+       //2
-                            appUser.email+"*"+          //3
-                            appUser.address.city+"*"+   //4
-                            appUser.phone+"*"+          //5
-                            appUser.website+"*"+        //6
-                            appUser.company.name)       //7
-                    editor2.apply()
-                    val intent = Intent(this@LogIn , MainHandler::class.java)
-                    startActivity(intent)
+                                    appUser.name+"*"+           //1
+                                    appUser.username+"*"+       //2
+                                    appUser.email+"*"+          //3
+                                    appUser.address.city+"*"+   //4
+                                    appUser.phone+"*"+          //5
+                                    appUser.website+"*"+        //6
+                                    appUser.company.name)       //7
+                        editor2.apply()
+                        val intent = Intent(this@LogIn , MainHandler::class.java)
+                        startActivity(intent)
+                    }else {
+                        Toast.makeText(this@LogIn, "کاربر یافت نشد", Toast.LENGTH_SHORT).show()
+                        loading(false)
+                        return
+                    }
 
                 }else{
                     Toast.makeText(this@LogIn, "کاربر یافت نشد", Toast.LENGTH_SHORT).show()
@@ -141,7 +146,7 @@ class LogIn : AppCompatActivity() {
                 email_txt.error = "طول ایمیل بیش از حد مجاز است"
                 false
             }
-            !email.contains('@') -> {
+            !email.contains('@') || !email.contains('.') -> {
                 email_txt.error = "لطفا آدرس ایمیل را به درستی وارد کنید"
                 false
             }

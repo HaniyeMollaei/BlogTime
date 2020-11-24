@@ -46,4 +46,7 @@
     <string name="phone_en">Phone</string>
     <string name="edit_en">Edit</string>
     <string name="image">image</string>
+    <string name="exit2">Exit</string>
+    <string name="log_out">Log Out</string>
+    <string name="exit_en">Exit</string>
 </resources>

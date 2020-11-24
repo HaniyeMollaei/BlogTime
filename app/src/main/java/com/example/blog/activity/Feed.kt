@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.blog.R
 import com.example.blog.activity.data.DataRepository
 import com.example.blog.adapter.PostAdapter

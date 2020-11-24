@@ -11,17 +11,18 @@ import kotlinx.android.synthetic.main.first_page.*
 
 class MainHandler:AppCompatActivity() {
 
-    lateinit var isLoggedIn : SharedPreferences
+//    lateinit var isLoggedIn : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.first_page)
+//
+//        isLoggedIn = this.getSharedPreferences("isLoggedIn" , MODE_PRIVATE)
+//
+//        if (!isLoggedIn.getBoolean("isLoggedIn",false)){
+//            startActivity(Intent(this , LogIn::class.java))
+//        }
 
-        isLoggedIn = this.getSharedPreferences("isLoggedIn" , MODE_PRIVATE)
-        if (!isLoggedIn.getBoolean("isLoggedIn",false)){
-            val intent = Intent(this , LogIn::class.java)
-            startActivity(intent)
-        }
+        setContentView(R.layout.first_page)
         replaceFragment(Feed())
 
         post_btn.setOnClickListener {

@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.profile_layout.*
 class Profile:Fragment() {
 
     private lateinit var userData : SharedPreferences
+    lateinit var isLoggedIn : SharedPreferences
     private lateinit var userDataArr : List<String>
 
     override fun onCreateView(
@@ -34,7 +35,19 @@ class Profile:Fragment() {
         userDataArr = data_tmp!!.split("*")
 
         edit_btn.setOnClickListener {
-            Toast.makeText( activity , "It isn't available" , Toast.LENGTH_SHORT).show()
+            Toast.makeText( activity , "Exit" , Toast.LENGTH_SHORT).show()
+            isLoggedIn = requireActivity().getSharedPreferences("isLoggedIn" , MODE_PRIVATE)
+            userData = requireActivity().getSharedPreferences("appUser" , MODE_PRIVATE)
+
+            val editor = isLoggedIn.edit()
+            editor.putBoolean("isLoggedIn" , false)
+            editor.apply()
+
+            val editor2 = userData.edit()
+            editor2.putString("appUser" , "")
+            editor2.apply()
+
+            requireActivity().finish()
         }
 
         name.text = userDataArr[1]

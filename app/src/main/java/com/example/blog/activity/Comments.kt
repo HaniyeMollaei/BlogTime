@@ -30,14 +30,13 @@ class Comments:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater?.inflate(R.layout.feed_layout, container, false)
+        return inflater.inflate(R.layout.feed_layout, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        userData = activity?.getSharedPreferences("appUser" , Context.MODE_PRIVATE) ?: userData
-        val data_tmp = userData.getString("appUser" , "")
-        getCommentsFromApi(2)
+        getCommentsFromApi(requireArguments().getInt("postId",0))
+
     }
 
 
