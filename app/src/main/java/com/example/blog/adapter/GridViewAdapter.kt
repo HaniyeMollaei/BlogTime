@@ -7,31 +7,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
-import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import com.example.blog.R
 import com.example.blog.activity.AlbumContent
 import com.example.blog.dataclass.Model
 import com.squareup.picasso.Picasso
 
-class GridViewAdapter(val context: AlbumContent , val photosData : List<Model.Photo>):BaseAdapter(){
+class GridViewAdapter(val context: AlbumContent, private val photosData : List<Model.Photo>
+                      , activity: FragmentActivity?) :BaseAdapter(){
+
+    private val act = activity
+
     private var layoutInflater: LayoutInflater? = null
     private lateinit var imageView: ImageView
-    private lateinit var textView: TextView
 
-    override fun getCount(): Int = photosData.size
+    override fun getCount(): Int = this.photosData.size
 
-    override fun getItem(p0: Int): Any = photosData[p0]
+    override fun getItem(p0: Int): Any = this.photosData[p0]
 
-    override fun getItemId(p0: Int): Long = photosData[p0].id.toLong()
+    override fun getItemId(p0: Int): Long = this.photosData[p0].id.toLong()
 
     override fun getView( position : Int, convertView : View?, parent: ViewGroup?): View {
-
-
 
         var convertView = convertView
         if (layoutInflater == null) {
             layoutInflater =
-                context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                act!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         }
         if (convertView == null) {
             convertView = layoutInflater!!.inflate(R.layout.thumbnail_photo_item, null)

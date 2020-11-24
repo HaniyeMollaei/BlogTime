@@ -1,6 +1,5 @@
 package com.example.blog.activity
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -23,7 +22,6 @@ import retrofit2.Response
 class Comments:Fragment() {
 
     lateinit var commentsList: List<Model.Comment>
-    private lateinit var userData : SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,

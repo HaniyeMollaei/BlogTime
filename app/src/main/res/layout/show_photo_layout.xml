@@ -18,11 +18,38 @@
         android:layout_height="match_parent"
         android:textSize="12sp"
         android:textColor="@color/colorPrimaryDark"
-        android:layout_weight="0.92"
+        android:layout_weight="0.46"
         android:paddingEnd="10dp"
         android:paddingStart="10dp"
         android:layout_margin="5dp"
 
         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.46"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimaryLight">
+        <Button
+            android:id="@+id/prev"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:text="@string/previous"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimaryDark"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            />
+        <Button
+            android:id="@+id/next"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:text="@string/next"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimaryDark"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            />
+    </LinearLayout>
 
 </LinearLayout>

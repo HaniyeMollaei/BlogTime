@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.example.blog.R
 import com.example.blog.activity.data.DataRepository
 import com.example.blog.adapter.PostAdapter
@@ -21,7 +20,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Feed:Fragment() {
+class Posts:Fragment() {
 
     lateinit var postsList: List<Model.Post>
     private lateinit var userData : SharedPreferences
@@ -31,14 +30,14 @@ class Feed:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater?.inflate(R.layout.feed_layout, container, false)
+        return inflater.inflate(R.layout.feed_layout, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         userData = activity?.getSharedPreferences("appUser" , Context.MODE_PRIVATE) ?: userData
-        val data_tmp = userData.getString("appUser" , "-1*هانیه ملائی*Haniye_Mli*Haniyemolaei1378@gmail.com*تهران*09371544159*https://github.com/HaniyeMollaei*شرکت ...")
-        getPostsFromApi( data_tmp!!.split("*")[0].toInt())
+        val dataTmp = userData.getString("appUser" , "-1*هانیه ملائی*Haniye_Mli*Haniyemolaei1378@gmail.com*تهران*09371544159*https://github.com/HaniyeMollaei*شرکت ...")
+        getPostsFromApi( dataTmp!!.split("*")[0].toInt())
     }
 
 

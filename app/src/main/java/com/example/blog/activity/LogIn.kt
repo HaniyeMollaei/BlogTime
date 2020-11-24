@@ -86,8 +86,8 @@ class LogIn : AppCompatActivity() {
                 call: Call<List<Model.User>>,
                 response: Response<List<Model.User>>
             ) {
-                if (!response.body()!!.isEmpty()){
-                    appUser = response.body()!!.get(0)
+                if (response.body()!!.isNotEmpty()){
+                    appUser = response.body()!![0]
                     if(username == appUser.username && email == appUser.email){
 
                         Toast.makeText(this@LogIn, "خوش آمدید", Toast.LENGTH_SHORT).show()

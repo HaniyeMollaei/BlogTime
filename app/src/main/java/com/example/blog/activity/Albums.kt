@@ -37,8 +37,8 @@ class Albums: Fragment(){
         recycler_view.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, true)
         userData = activity?.getSharedPreferences("appUser" , Context.MODE_PRIVATE) ?: userData
-        val data_tmp = userData.getString("appUser" , "-1*هانیه ملائی*Haniye_Mli*Haniyemolaei1378@gmail.com*تهران*09371544159*https://github.com/HaniyeMollaei*شرکت ...")
-        getAlbumsFromApi(data_tmp!!.split("*")[0].toInt())
+        val dataTmp = userData.getString("appUser" , "-1*هانیه ملائی*Haniye_Mli*Haniyemolaei1378@gmail.com*تهران*09371544159*https://github.com/HaniyeMollaei*شرکت ...")
+        getAlbumsFromApi(dataTmp!!.split("*")[0].toInt())
 
     }
 
@@ -53,7 +53,7 @@ class Albums: Fragment(){
                 call: Call<List<Model.Album>>,
                 response: Response<List<Model.Album>>
             ) {
-                recycler_view.adapter = AlbumAdapter(response.body()!!, context)
+                recycler_view.adapter = AlbumAdapter(response.body()!!, activity)
             }
 
             override fun onFailure(call: Call<List<Model.Album>>, t: Throwable) {

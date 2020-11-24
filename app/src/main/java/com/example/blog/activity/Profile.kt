@@ -1,6 +1,7 @@
 package com.example.blog.activity
 
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.profile_layout.*
 class Profile:Fragment() {
 
     private lateinit var userData : SharedPreferences
-    lateinit var isLoggedIn : SharedPreferences
+    private lateinit var isLoggedIn : SharedPreferences
     private lateinit var userDataArr : List<String>
 
     override fun onCreateView(
@@ -30,13 +31,13 @@ class Profile:Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         userData = activity?.getSharedPreferences("appUser" , MODE_PRIVATE) ?: userData
-        val data_tmp = userData.getString("appUser" , "-1*هانیه ملائی*Haniye_Mli*Haniyemolaei1378@gmail.com*تهران*09371544159*https://github.com/HaniyeMollaei*شرکت ...")
+        val dataTmp = userData.getString("appUser" , "-1*هانیه ملائی*Haniye_Mli*Haniyemolaei1378@gmail.com*تهران*09371544159*https://github.com/HaniyeMollaei*شرکت ...")
 
-        userDataArr = data_tmp!!.split("*")
+        userDataArr = dataTmp!!.split("*")
 
         edit_btn.setOnClickListener {
             Toast.makeText( activity , "Exit" , Toast.LENGTH_SHORT).show()
-            isLoggedIn = requireActivity().getSharedPreferences("isLoggedIn" , MODE_PRIVATE)
+            this.isLoggedIn = requireActivity().getSharedPreferences("isLoggedIn" , MODE_PRIVATE)
             userData = requireActivity().getSharedPreferences("appUser" , MODE_PRIVATE)
 
             val editor = isLoggedIn.edit()
@@ -47,7 +48,7 @@ class Profile:Fragment() {
             editor2.putString("appUser" , "")
             editor2.apply()
 
-            requireActivity().finish()
+            startActivity(Intent(activity , LogIn::class.java))
         }
 
         name.text = userDataArr[1]

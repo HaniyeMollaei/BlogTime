@@ -1,8 +1,7 @@
 package com.example.blog.adapter
 
 
-import android.content.Context
-import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.blog.R
 import com.example.blog.activity.AlbumContent
@@ -21,8 +21,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AlbumAdapter(private val albumData: List<Model.Album>, private val context: Context?)
+class AlbumAdapter(private val albumData: List<Model.Album>,activity: FragmentActivity?)
     : RecyclerView.Adapter<AlbumAdapter.CustomViewHolder>() {
+
+    val act = activity
 
     inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
@@ -38,12 +40,18 @@ class AlbumAdapter(private val albumData: List<Model.Album>, private val context
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        getImageFromApi(1 , holder , position)
+
+        getImageFromApi(albumData[position].id , holder , position)
         holder.title.text = albumData[position].title
         holder.tempView.setOnClickListener {
-            val intent_temp = Intent(context , AlbumContent::class.java)
-                .putExtra("albumId" , albumData[position].id)
-            context?.startActivity(intent_temp)
+
+            val bundle = Bundle()
+            bundle.putInt("albumId", albumData[position].id)
+            val fragmentTwo = AlbumContent()
+            fragmentTwo.arguments = bundle
+
+            this@AlbumAdapter.act!!.supportFragmentManager.beginTransaction().replace(R.id.container , fragmentTwo).commit()
+
         }
     }
 
@@ -57,8 +65,7 @@ class AlbumAdapter(private val albumData: List<Model.Album>, private val context
                 call: Call<List<Model.Photo>>,
                 response: Response<List<Model.Photo>>
             ) {
-                println("this is response :  \n"
-                        +"Email :  "+ response.body()!![0].title + "  ||  Username" + response.body()!![0].url)
+
                 Picasso.get().load(response.body()!![position].thumbnailUrl).into(holder.img)
             }
 

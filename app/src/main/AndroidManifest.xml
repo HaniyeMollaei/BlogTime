@@ -20,8 +20,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainHandler"/>
-        <activity android:name=".activity.AlbumContent"/>
-        <activity android:name=".activity.ShowPhoto"/>
     </application>
 
 </manifest>

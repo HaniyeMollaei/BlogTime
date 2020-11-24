@@ -1,7 +1,5 @@
 package com.example.blog.activity
 
-import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -11,22 +9,15 @@ import kotlinx.android.synthetic.main.first_page.*
 
 class MainHandler:AppCompatActivity() {
 
-//    lateinit var isLoggedIn : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//
-//        isLoggedIn = this.getSharedPreferences("isLoggedIn" , MODE_PRIVATE)
-//
-//        if (!isLoggedIn.getBoolean("isLoggedIn",false)){
-//            startActivity(Intent(this , LogIn::class.java))
-//        }
 
         setContentView(R.layout.first_page)
-        replaceFragment(Feed())
+        replaceFragment(Posts())
 
         post_btn.setOnClickListener {
-            replaceFragment(Feed())
+            replaceFragment(Posts())
         }
         profile_btn.setOnClickListener {
             replaceFragment(Profile())

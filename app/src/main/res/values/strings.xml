@@ -49,4 +49,6 @@
     <string name="exit2">Exit</string>
     <string name="log_out">Log Out</string>
     <string name="exit_en">Exit</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
 </resources>

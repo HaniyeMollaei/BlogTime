@@ -1,14 +1,14 @@
 package com.example.blog.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.AdapterView
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.blog.R
 import com.example.blog.activity.data.DataRepository
-import com.example.blog.adapter.GridViewAdapter
 import com.example.blog.dataclass.Model
 import com.example.blog.dataclass.PhotoApi
 import com.squareup.picasso.Picasso
@@ -17,13 +17,30 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ShowPhoto:AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.show_photo_layout)
-        getPhotoFromApi(intent.getIntExtra("photoId" , 0))
+class ShowPhoto:Fragment() {
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.show_photo_layout, container, false)
     }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        var imgId = requireArguments().getInt("photoId",0)
+        getPhotoFromApi(imgId)
+
+        next.setOnClickListener {
+            getPhotoFromApi(++imgId)
+        }
+        prev.setOnClickListener {
+            getPhotoFromApi(--imgId)
+        }
+    }
+
 
     private fun getPhotoFromApi(photoId: Int) {
         val dataRepository = DataRepository()
@@ -35,12 +52,6 @@ class ShowPhoto:AppCompatActivity() {
                 call: Call<List<Model.Photo>>,
                 response: Response<List<Model.Photo>>
             ) {
-                Log.w(
-                    "Server Ok",
-                    response.body()?.get(0)!!.title + "   |||   " + response.body()?.get(0)!!.id
-                )
-                println("this is response :  \n"
-                        +"Title :  "+ response.body()!![0].title + "  ||  Id" + response.body()!![0].id)
 
                 Picasso.get().load(response.body()!![0].url).into(photo)
             }
